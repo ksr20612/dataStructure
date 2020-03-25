@@ -1,0 +1,79 @@
+package 그리디BFSDFS0303;
+import java.util.*;
+import java.io.*;
+
+public class Q2178 {
+
+	/*
+	 * 미로 탐색
+	 *  - 최단 거리 탐색 => BFS 이용
+	 *  - new map 만들어서 위에 카운트 해주기
+	 */
+	
+	static int n;
+	static int m;
+	static int[][] map;
+	static boolean[][] visited;
+	static int[] dx = {0,0,-1,1};
+	static int[] dy = {1,-1,0,0};
+	
+	static class Node {
+		int x;
+		int y;
+		
+		Node(int x, int y){
+			this.x = x;
+			this.y = y;
+		}
+	}
+	
+	public static void BFS(int x, int y) {
+		
+		Queue<Node> needVisit = new LinkedList<Node>();
+		Node node = new Node(x,y);
+		needVisit.add(node);
+		
+		while(needVisit.size()!=0) {
+			
+			Node target = needVisit.poll();
+			
+			for(int i=0;i<=3;i++) {
+				int nx = target.x + dx[i];
+				int ny = target.y + dy[i];
+				
+				if(nx>=0&&nx<=n-1&&ny>=0&&ny<=m-1) { //조건
+					if(map[nx][ny]==1&&nx+ny!=0) { // 어차피 1이면 안들린 애임, visited체크 안해도됨(뒤에 덧붙인 조건은 그냥 (0,0)인 경우 또 들어가지 않게끔)
+						Node newNode = new Node(nx,ny);
+						needVisit.add(newNode);
+						map[nx][ny] = map[nx][ny] + map[target.x][target.y];
+					}
+				}
+			}
+		}
+		
+		System.out.println(map[n-1][m-1]);
+		
+	}
+	
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine()," ");
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		map = new int[n][m];
+		visited = new boolean[n][m];
+		
+		for(int i=0;i<=n-1;i++) {
+			String line = br.readLine();
+			for(int j=0;j<=m-1;j++) {
+				map[i][j] = Integer.parseInt(line.substring(j,j+1));
+			}
+		}
+		
+		BFS(0,0);
+		
+	}
+
+}
