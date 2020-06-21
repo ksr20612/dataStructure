@@ -1,0 +1,59 @@
+package 정렬0225;
+
+import java.util.*;
+import java.io.*;
+import java.util.stream.*;
+
+public class Q1181 {
+
+	public static void sort(String[] list) {
+		
+		for(int i=1;i<=list.length-1;i++) {
+			for(int j=i;j>=1;j--) {
+				//길이가 다르면
+				if(list[j].length()<list[j-1].length()) {
+					String temp = list[j];
+					list[j] = list[j-1];
+					list[j-1] = temp;
+				}else if(list[j].length()==list[j-1].length()) { //길이가 같으면
+					for(int m=0;m<=list[j].length()-1;m++) {
+						if(list[j].charAt(m)<list[j-1].charAt(m)) { //앞에 것이 더 뒷자리면  
+							String temp = list[j];
+							list[j] = list[j-1];
+							list[j-1] = temp;
+							break;
+						}else if(list[j].charAt(m)==list[j-1].charAt(m)) {
+							continue;
+						}else break;
+					}
+				}else break;
+			}
+		}
+		
+		//출력
+		for(int i=0;i<=list.length-1;i++) {
+			if(i==0) System.out.println(list[0]);
+			else {
+				if(!list[i].equals(list[i-1])) System.out.println(list[i]); // 같지 않을 때만 출력하기
+			}
+		}
+		
+		
+	}
+	
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int n = Integer.parseInt(br.readLine());
+		String[] list = new String[n];
+		
+		for(int i=0;i<=n-1;i++) {
+			list[i] = br.readLine();
+		}
+		
+		sort(list);
+	}
+
+}

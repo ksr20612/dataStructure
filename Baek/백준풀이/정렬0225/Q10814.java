@@ -1,0 +1,52 @@
+package 정렬0225;
+
+import java.util.*;
+import java.io.*;
+
+public class Q10814 {
+
+	static class Node{
+		int age;
+		String name;
+		Node(int x, String y) {
+			this.age = x;
+			this.name = y;
+		}
+	}
+	
+	public static void sort(Node[] list) {
+		
+		for(int i=1;i<=list.length-1;i++) {
+			for(int j=i;j>=1;j--) {
+				if(list[j].age<list[j-1].age) {
+					Node temp = list[j];
+					list[j] = list[j-1];
+					list[j-1] = temp;
+				}
+			}
+		}
+		
+		// 출력
+		for(int i=0;i<=list.length-1;i++) {
+			System.out.println(list[i].age+" "+list[i].name);
+		}
+	}
+	
+	public static void main(String[] args) throws IOException{
+		// TODO Auto-generated method stub
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int n = Integer.parseInt(br.readLine());
+		Node[] list = new Node[n];
+		
+		for(int i=0;i<=n-1;i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine()," ");
+			Node node = new Node(Integer.parseInt(st.nextToken()),st.nextToken());
+			list[i] = node;
+		}
+		
+		sort(list);
+	}
+
+}
